@@ -2,7 +2,7 @@ package org.example;
 
 /**
  * @Author: Zeng Jian
- * @DateTime: 2023-12-19 14:58 PM
+ * @DateTime: 2023-12-19 14:58
  * @Description: Library Management	System Entrance
  */
 public class Main {
