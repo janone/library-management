@@ -9,7 +9,6 @@ import java.util.*;
 public class BaseDao<T> {
 
     private String getIdFieldName;
-    private List<String> getFieldList;
 
     public BaseDao() {
         Type type = this.getClass().getGenericSuperclass();
@@ -20,12 +19,12 @@ public class BaseDao<T> {
             // 获取第一个泛型参数的类型
             Class<?> genericArg1 = (Class<?>) parameterizedType.getActualTypeArguments()[0];
 
-            System.out.println("泛型参数类型为：" + genericArg1);
+//            System.out.println("泛型参数类型为：" + genericArg1);
 
-            Field[] fields = genericArg1.getFields();
+            Field[] fields = genericArg1.getDeclaredFields();
             for (int i = 0; i < fields.length; i++) {
                 Field field = fields[i];
-                Class<?> type1 = field.getType();
+                field.setAccessible(true);
                 String fieldName = field.getName();
                 String capitalizedFieldName = capitalizedFieldName(fieldName);
                 String getMethodName = "get" + capitalizedFieldName;
@@ -33,7 +32,6 @@ public class BaseDao<T> {
                 if (annotation != null) {
                     this.getIdFieldName = getMethodName;
                 }
-                getFieldList.add(getMethodName);
             }
         } else {
             System.out.println("该类没有定义泛型参数");
@@ -86,35 +84,45 @@ public class BaseDao<T> {
 
     public List<T> list(T t) {
         try {
-            Collection<T> values = storage.values();
-            ArrayList<T> result = new ArrayList<>(values);
 
-            Field[] fields = t.getClass().getFields();
+            Collection<T> values = storage.values();
+            List<T> result = new ArrayList<>(values);
+
+            if(t == null) return result;
+
+            Field[] fields = t.getClass().getDeclaredFields();
             for (int i = 0; i < fields.length; i++) {
                 Field field = fields[i];
                 field.setAccessible(true);
                 Class<?> type = field.getType();
-                if (type == String.class) {
-                    String param = (String) field.get(t);
-                    if(param == null) continue;
-
-                    for (T dbObj : values) {
-                        String dbFiledValue = (String) field.get(dbObj);
-                        if (!dbFiledValue.toLowerCase().contains(param)) {
-                            result.remove(dbObj);
-                        }
-                    }
+                IDField annotation = field.getAnnotation(IDField.class);
+                if(annotation != null){
+                    // id field then the field value should be absolutely the same
+                    result = Arrays.asList(getById((Serializable) field.get(t)));
                 } else {
-                    Object param = field.get(t);
-                    if(param == null) continue;
+                    if (type == String.class) {
+                        String param = (String) field.get(t);
+                        if(param == null) continue;
 
-                    for (T dbObj : values) {
-                        Object dbFiledValue = field.get(dbObj);
-                        if (!dbFiledValue.equals(param)) {
-                            result.remove(dbObj);
+                        for (T dbObj : values) {
+                            String dbFiledValue = (String) field.get(dbObj);
+                            if (!dbFiledValue.toLowerCase().contains(param)) {
+                                result.remove(dbObj);
+                            }
+                        }
+                    } else {
+                        Object param = field.get(t);
+                        if(param == null) continue;
+
+                        for (T dbObj : values) {
+                            Object dbFiledValue = field.get(dbObj);
+                            if (!dbFiledValue.equals(param)) {
+                                result.remove(dbObj);
+                            }
                         }
                     }
                 }
+
             }
             return result;
 
@@ -123,6 +131,10 @@ public class BaseDao<T> {
         }
 
 
+    }
+
+    public List<T> list() {
+        return list(null);
     }
 
 }
