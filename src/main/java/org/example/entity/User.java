@@ -21,7 +21,7 @@ public class User {
     /**
      * a flag to indicate if the user is admin
      */
-    private boolean isAdmin;
+    private Boolean isAdmin;
 
     public String getAccount() {
         return account;
@@ -31,11 +31,11 @@ public class User {
         this.account = account;
     }
 
-    public boolean isAdmin() {
+    public Boolean getAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setAdmin(Boolean admin) {
         isAdmin = admin;
     }
 
@@ -45,5 +45,15 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", isAdmin=" + isAdmin +
+                '}';
     }
 }

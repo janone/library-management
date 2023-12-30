@@ -4,19 +4,11 @@ import org.example.common.Result;
 import org.example.entity.User;
 import org.example.service.UserService;
 
-public class UserController {
+public interface UserController extends Controller{
 
-    private UserService userService = new UserService();
+    Result<Boolean> register(User user);
+    Result<User> getUserByAccount(String account);
 
-    public Result<Boolean> register(User user){
-        if(user.getAccount() == null || user.getAccount().equals("")){
-            return Result.fail("user account can not be empty");
-        }
-        if(user.getPassword()== null || user.getPassword().equals("")){
-            return Result.fail("password can not be empty");
-        }
 
-        return Result.success();
-    }
 
 }
