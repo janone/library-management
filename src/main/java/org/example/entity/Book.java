@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Book entity
+ * Book entity, store pure book info
  */
 public class Book {
+
+
     /**
      * book id: the format is "["+author + "]-[" + book_name + "]"
      */
@@ -43,6 +45,9 @@ public class Book {
         this.inventory = inventory;
         this.unionKey = generateUnionKey(this.author, this.name);
 
+    }
+
+    public Book() {
     }
 
     public String getName() {
