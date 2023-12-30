@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Library {
 
-    private Map<String, Book> booksMap;
+    private Map<String, BookItem> booksMap;
 
     private Map<String, User> usersMap;
 

@@ -96,7 +96,7 @@ public class BaseDao<T> {
                 field.setAccessible(true);
                 Class<?> type = field.getType();
                 IDField annotation = field.getAnnotation(IDField.class);
-                if(annotation != null){
+                if(annotation != null && field.get(t) != null){
                     // id field then the field value should be absolutely the same
                     result = Arrays.asList(getById((Serializable) field.get(t)));
                 } else {

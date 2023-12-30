@@ -1,4 +1,6 @@
 package org.example.dao;
 
-public class UserDao {
+import org.example.entity.User;
+
+public class UserDao extends BaseDao<User>{
 }
