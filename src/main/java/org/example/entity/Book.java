@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import org.example.annotation.IDField;
 import sun.security.provider.MD5;
 
 import java.security.MessageDigest;
@@ -15,6 +16,7 @@ public class Book {
     /**
      * book id: the format is "["+author + "]-[" + book_name + "]"
      */
+    @IDField
     private String unionKey;
 
     /**

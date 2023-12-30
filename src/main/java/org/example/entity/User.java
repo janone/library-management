@@ -1,5 +1,7 @@
 package org.example.entity;
 
+import org.example.annotation.IDField;
+
 /**
  * the User entity, it has two type of user ADMIN and USER;
  */
@@ -8,6 +10,7 @@ public class User {
     /**
      * username, it is unique
      */
+    @IDField
     private String account;
 
     /**
