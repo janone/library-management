@@ -21,7 +21,7 @@ class IControllerFactoryTest {
         User user = new User();
         user.setAccount("Jack");
         user.setPassword("1234345");
-        user.setAdmin(true);
+        user.setIsAdmin(true);
         bean.register(user);
 
         Result<User> jack = bean.getUserByAccount("Jack");
