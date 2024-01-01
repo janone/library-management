@@ -1,5 +1,9 @@
 package org.example;
 
+import org.example.common.ControllerFactory;
+import org.example.controller.impl.UserControllerImpl;
+import org.example.view.MainView;
+
 import java.util.Scanner;
 
 /**
@@ -8,16 +12,21 @@ import java.util.Scanner;
  * @Description: Library Management	System Entrance
  */
 public class Main {
+
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static Scanner getScanner(){
+        return scanner;
+    }
     public static void main(String[] args) {
 
-        System.out.println("====================================");
-        System.out.println("Welcome to Library Management System");
-        System.out.println("====================================");
-        System.out.println("Please fill your account to Login or Register: ");
-        Scanner scanner = new Scanner(System.in);
-        String account = scanner.next();
+        ControllerFactory.getInstance().registerToBeanFactory(
+                new UserControllerImpl()
+        );
 
-        // check if account exist
+
+        new MainView().show();
+
 
 
 

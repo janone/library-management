@@ -31,11 +31,11 @@ public class User {
         this.account = account;
     }
 
-    public Boolean getAdmin() {
+    public Boolean isAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(Boolean admin) {
+    public void setIsAdmin(Boolean admin) {
         isAdmin = admin;
     }
 

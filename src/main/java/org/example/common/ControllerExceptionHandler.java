@@ -11,9 +11,18 @@ public class ControllerExceptionHandler implements InvocationHandler {
     }
 
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println("Before method call " + method.getName());
-        Object result = method.invoke(target, args);
-        System.out.println("After method call " + method.getName());
+        Object result;
+        try{
+
+            System.out.println("Before method call " + method.getName());
+            result = method.invoke(target, args);
+            System.out.println("After method call " + method.getName());
+
+        } catch (Exception e){
+            e.printStackTrace();
+            result = Result.fail(e.getMessage());
+        }
+
         return result;
     }
 }
