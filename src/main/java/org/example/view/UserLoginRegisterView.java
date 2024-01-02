@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class UserLoginRegisterView {
 
 
-    private IUserController userController = ControllerFactory.getBean(UserControllerImpl.class);
+    private IUserController userController = ControllerFactory.getBean(IUserController.class);
     public User show(){
         Scanner scanner = Main.getScanner();
         System.out.println("====================================");
@@ -41,6 +41,7 @@ public class UserLoginRegisterView {
                     continue;
                 }
 
+
                 User user = new User();
                 user.setAccount(account);
                 user.setPassword(password);
@@ -58,6 +59,8 @@ public class UserLoginRegisterView {
                 if(password.equals(data.getPassword())){
                     System.out.println("you login success !!");
                     return data;
+                } else {
+                    System.out.println("password is not correct");
                 }
             }
         }

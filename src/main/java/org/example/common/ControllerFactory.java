@@ -51,6 +51,7 @@ public class ControllerFactory {
                             InvocationHandler handler = new ControllerExceptionHandler(bean);
                             Object proxy = Proxy.newProxyInstance(anInterface.getClassLoader(), bean.getClass().getInterfaces(), handler);
                             factory.getProxyContainer().put(anInterface, proxy);
+                            factory.getProxyContainer().put(clazz, proxy);
                         }
                     } else {
                         factory.getProxyContainer().put(clazz,bean);
@@ -62,7 +63,7 @@ public class ControllerFactory {
             e.printStackTrace();
         }
 
-        return (T)bean;
+        return (T) factory.getProxyContainer().get(clazz);
     }
 
     private static void populateBean(Object bean) throws IllegalAccessException {

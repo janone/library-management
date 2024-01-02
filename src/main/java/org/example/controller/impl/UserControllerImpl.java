@@ -1,6 +1,7 @@
 package org.example.controller.impl;
 
 import org.example.annotation.AutoWiredField;
+import org.example.common.BusinessException;
 import org.example.common.Result;
 import org.example.controller.IUserController;
 import org.example.entity.User;
@@ -12,13 +13,17 @@ public class UserControllerImpl implements IUserController {
 
     public Result<Boolean> register(User user){
         if(user.getAccount() == null || user.getAccount().trim().equals("")){
-            return Result.fail("user account can not be empty");
+            throw new BusinessException("user account can not be empty");
         }
         if(user.getPassword()== null || user.getPassword().trim().equals("")){
-            return Result.fail("password can not be empty");
+            throw new BusinessException("password can not be empty");
         }
         if(user.getPassword().length() < 6){
-            return Result.fail("password's length should not be less than 6");
+            throw new BusinessException("password's length should not be less than 6");
+        }
+
+        if(user.getIsAdmin() == null){
+            user.setIsAdmin(false);
         }
 
         userService.insert(user);
@@ -44,7 +49,7 @@ public class UserControllerImpl implements IUserController {
 
         User byId = userService.getById(account);
         if(byId.getIsAdmin()){
-            throw new RuntimeException("user is already admin");
+            throw new BusinessException("user is already admin");
         }
 
         byId.setIsAdmin(true);
@@ -53,13 +58,4 @@ public class UserControllerImpl implements IUserController {
     }
 
 
-    @Override
-    public Object getServiceBean() {
-        return this.userService;
-    }
-
-    @Override
-    public Object getDaoBean() {
-        return this.userService.getDao();
-    }
 }

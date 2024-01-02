@@ -19,19 +19,19 @@ public class AddBookView implements View{
         }
 
         while (true) {
-            System.out.println("please enter book name, or enter RT to return main page");
+            System.out.println("please enter book name");
             String bookName = scanner.next();
-            if(bookName.equals("R"))return;
+            checkReturn(bookName);
 
-            System.out.println("please enter book author, or enter RT to return main page");
+            System.out.println("please enter book author");
 
             String bookAuthor = scanner.next();
-            if(bookAuthor.equals("R"))return;
+            checkReturn(bookAuthor);
 
 
-            System.out.println("please enter the inventory, or enter R to return main page");
+            System.out.println("please enter the inventory");
             String inventory = scanner.next();
-            if(inventory.equals("R"))return;
+            checkReturn(inventory);
 
             BookItem bookItem = new BookItem(bookName, bookAuthor, Integer.valueOf(inventory));
             Result<BookItem> bookItemResult = bookController.addBook(bookItem);

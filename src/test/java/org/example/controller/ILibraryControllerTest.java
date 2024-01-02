@@ -26,12 +26,6 @@ class ILibraryControllerTest {
 
     @BeforeEach
     void setUp() {
-//        ControllerFactory.getInstance().registerToBeanFactory(
-//                new BookControllerImpl(),
-//                new LibraryControllerImpl(),
-//                new BorrowRecordControllerImpl(),
-//                new UserControllerImpl()
-//        );
 
 
         libraryController = ControllerFactory.getBean(LibraryControllerImpl.class);
@@ -78,7 +72,7 @@ class ILibraryControllerTest {
         libraryController.returnBook("Jack", "bookName1", "bookAuthor1", 1);
         Result<List<BorrowRecord>> record2 = borrowRecordController.getByUserAccount("Jack");
         Result<BookItem> books = bookController.getBooks("bookAuthor1", "bookName1");
-        assertEquals(0, (int) books.getData().getInventory());
+        assertEquals(2, (int) books.getData().getInventory());
         assertEquals(0,record2.getData().size());
 
 

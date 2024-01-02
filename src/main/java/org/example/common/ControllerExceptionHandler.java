@@ -1,6 +1,7 @@
 package org.example.common;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ControllerExceptionHandler implements InvocationHandler {
@@ -12,17 +13,17 @@ public class ControllerExceptionHandler implements InvocationHandler {
 
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         Object result;
-        try{
+        try {
 
 //            System.out.println("Before method call " + method.getName());
             result = method.invoke(target, args);
 //            System.out.println("After method call " + method.getName());
-
-        } catch (Exception e){
-            e.printStackTrace();
-            result = Result.fail(e.getMessage());
+        } catch (InvocationTargetException e) {
+            if (!(e.getTargetException() instanceof BusinessException)) {
+                e.printStackTrace();
+            }
+            result = Result.fail(e.getTargetException().getMessage());
         }
-
         return result;
     }
 }

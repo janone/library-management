@@ -66,7 +66,7 @@ public class LibraryManager {
             borrowRecordService.update(borrowRecord);
         }
 
-        book.setInventory(book.getInventory() - amount);
+        book.setInventory(book.getInventory() + amount);
         bookItemService.update(book);
 
         return true;

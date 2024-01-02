@@ -67,6 +67,7 @@ public class MainView implements View{
     }
 
     private static void showMenu() {
+        System.out.println(" = = = = = = = = = = = = = = = = = = =");
         if(loginUser.getIsAdmin()){
             System.out.println("A: add books");
             System.out.println("D: delete books");
@@ -77,7 +78,7 @@ public class MainView implements View{
         System.out.println("B: borrow books");
         System.out.println("R: return books");
         System.out.println("O: login out");
-        System.out.println("note: you can type " + scanner + " at any time to return to this page.");
+        System.out.println("note: you can type '" + RETURN_COMMAND + "' at any time to return to this page.");
     }
 
 }

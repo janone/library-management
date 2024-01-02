@@ -11,15 +11,7 @@ import java.util.List;
 public class BorrowRecordControllerImpl implements IBorrowRecordController {
     @AutoWiredField
     private BorrowRecordService borrowRecordService;
-    @Override
-    public Object getServiceBean() {
-        return this.borrowRecordService;
-    }
 
-    @Override
-    public Object getDaoBean() {
-        return this.borrowRecordService.getDao();
-    }
 
     @Override
     public Result<List<BorrowRecord>> getByUserAccount(String userAccount) {

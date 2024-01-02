@@ -1,6 +1,7 @@
 package org.example.controller.impl;
 
 import org.example.annotation.AutoWiredField;
+import org.example.common.BusinessException;
 import org.example.common.ControllerFactory;
 import org.example.common.Result;
 import org.example.controller.IBookController;
@@ -25,16 +26,16 @@ public class BookControllerImpl implements IBookController {
 
     public Result<BookItem> addBook(BookItem bookItem){
         if(bookItem == null){
-            throw new RuntimeException("bookItem should not be null");
+            throw new BusinessException("bookItem should not be null");
         }
         if(bookItem.getName() == null || bookItem.getName().trim().equals("")){
-            throw new RuntimeException("book name should not be empty");
+            throw new BusinessException("book name should not be empty");
         }
         if(bookItem.getAuthor() == null || bookItem.getAuthor().trim().equals("")){
-            throw new RuntimeException("book author should not be empty");
+            throw new BusinessException("book author should not be empty");
         }
         if(bookItem.getInventory() == null || bookItem.getInventory() == 0){
-            throw new RuntimeException("inventory should not be null");
+            throw new BusinessException("inventory should not be null");
         }
 
         String unionKey = BookItem.generateUnionKey(bookItem.getAuthor(), bookItem.getName());
@@ -52,25 +53,25 @@ public class BookControllerImpl implements IBookController {
 
     public Result<Boolean> delBooks(String author, String name) {
         if(name == null || name.trim().equals("")){
-            throw new RuntimeException("please enter the book name");
+            throw new BusinessException("please enter the book name");
         }
 
         if(author == null || author.trim().equals("")){
-            throw new RuntimeException("please enter the book author");
+            throw new BusinessException("please enter the book author");
         }
 
         // check if data exist
         String unionKey = BookItem.generateUnionKey(author, name);
         BookItem byId = bookItemService.getById(unionKey);
         if(byId == null){
-            throw new RuntimeException("the book does not exist");
+            throw new BusinessException("the book does not exist");
         }
 
         BorrowRecord borrowRecord = new BorrowRecord();
         borrowRecord.setBookUnionKey(BookItem.generateUnionKey(author, name));
         List<BorrowRecord> list = borrowRecordService.list(borrowRecord);
         if(list.size() > 0){
-            throw new RuntimeException("the book is borrowed by someone");
+            throw new BusinessException("the book is borrowed by someone");
         }
 
         // delete if exist
@@ -88,17 +89,17 @@ public class BookControllerImpl implements IBookController {
      */
     public Result<BookItem> getBooks(String author, String name) {
         if(author == null || author.trim().equals("")){
-            throw new RuntimeException("please enter the book author");
+            throw new BusinessException("please enter the book author");
         }
 
         if(name == null || name.trim().equals("")){
-            throw new RuntimeException("please enter the book name");
+            throw new BusinessException("please enter the book name");
         }
 
         String unionKey = BookItem.generateUnionKey(author, name);
         BookItem byId = bookItemService.getById(unionKey);
         if(byId == null){
-            throw new RuntimeException("the book does not exist");
+            throw new BusinessException("the book does not exist");
         }else{
             return Result.successWithData(byId);
         }
@@ -110,21 +111,9 @@ public class BookControllerImpl implements IBookController {
      * @return Result<List<BookItem>>
      */
     public Result<Collection<BookItem>> listBooksByKeyword(String keyword) {
-        if(keyword == null || keyword.trim().equals("")){
-            throw new RuntimeException("please enter the keyword");
-        }
         Collection<BookItem> books = bookItemService.listByKeyWord(keyword);
         return Result.successWithData(books);
     }
 
 
-    @Override
-    public Object getServiceBean() {
-        return this.bookItemService;
-    }
-
-    @Override
-    public Object getDaoBean() {
-        return this.bookItemService.getDao();
-    }
 }
