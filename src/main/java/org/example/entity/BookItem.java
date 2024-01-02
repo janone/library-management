@@ -98,6 +98,20 @@ public class BookItem {
                 '}';
     }
 
+    @Override
+    public int hashCode() {
+        return BookItem.generateUnionKey(this.author,this.name).hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        BookItem newItem = (BookItem)obj;
+        return BookItem.generateUnionKey(this.author,this.name)
+                .equals(
+                BookItem.generateUnionKey(newItem.getAuthor(),newItem.getName())
+        );
+    }
+
     public synchronized boolean borrow(String userAccount, int amount) {
 
         if(amount > this.inventory){

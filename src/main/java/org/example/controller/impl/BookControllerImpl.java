@@ -8,6 +8,7 @@ import org.example.entity.User;
 import org.example.service.BookItemService;
 import org.example.service.UserService;
 
+import java.util.Collection;
 import java.util.List;
 
 public class BookControllerImpl implements IBookController {
@@ -38,20 +39,20 @@ public class BookControllerImpl implements IBookController {
             bookItemService.addBook(bookItem);
         }
 
-        return Result.success();
+        return Result.successWithData(bookItem);
     }
 
-    public Result<Boolean> delBooks(BookItem bookItem) {
-        if(bookItem.getName() == null || bookItem.getName().trim().equals("")){
+    public Result<Boolean> delBooks(String author, String name) {
+        if(name == null || name.trim().equals("")){
             throw new RuntimeException("please enter the book name");
         }
 
-        if(bookItem.getAuthor() == null || bookItem.getAuthor().trim().equals("")){
+        if(author == null || author.trim().equals("")){
             throw new RuntimeException("please enter the book author");
         }
 
         // check if data exist
-        String unionKey = BookItem.generateUnionKey(bookItem.getAuthor(), bookItem.getName());
+        String unionKey = BookItem.generateUnionKey(author, name);
         BookItem byId = bookItemService.getById(unionKey);
         if(byId == null){
             throw new RuntimeException("the book does not exist");
@@ -62,6 +63,43 @@ public class BookControllerImpl implements IBookController {
 
         return Result.success();
 
+    }
+
+    /**
+     * search for a book by author and name
+     * @param author
+     * @param name
+     * @return
+     */
+    public Result<BookItem> getBooks(String author, String name) {
+        if(author == null || author.trim().equals("")){
+            throw new RuntimeException("please enter the book author");
+        }
+
+        if(name == null || name.trim().equals("")){
+            throw new RuntimeException("please enter the book name");
+        }
+
+        String unionKey = BookItem.generateUnionKey(author, name);
+        BookItem byId = bookItemService.getById(unionKey);
+        if(byId == null){
+            throw new RuntimeException("the book does not exist");
+        }else{
+            return Result.successWithData(byId);
+        }
+    }
+
+    /**
+     * search books by criteria
+     * @param keyword
+     * @return Result<List<BookItem>>
+     */
+    public Result<Collection<BookItem>> listBooksByKeyword(String keyword) {
+        if(keyword == null || keyword.trim().equals("")){
+            throw new RuntimeException("please enter the keyword");
+        }
+        Collection<BookItem> books = bookItemService.listByKeyWord(keyword);
+        return Result.successWithData(books);
     }
 
 

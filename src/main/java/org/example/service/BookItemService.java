@@ -3,7 +3,7 @@ package org.example.service;
 import org.example.dao.BookItemDao;
 import org.example.entity.BookItem;
 
-import java.util.List;
+import java.util.*;
 
 public class BookItemService extends BaseService<BookItemDao, BookItem>{
 
@@ -31,4 +31,18 @@ public class BookItemService extends BaseService<BookItemDao, BookItem>{
         return true;
     }
 
+    public Collection<BookItem> listByKeyWord(String keyword) {
+        BookItem param1 = new BookItem();
+        param1.setName(keyword);
+        BookItem param2 = new BookItem();
+        param2.setAuthor(keyword);
+
+        Set<BookItem> set1 = new HashSet<>(this.list(param1));
+        Set<BookItem> set2 = new HashSet<>(this.list(param2));
+        set1.addAll(set2);
+
+
+        return set1;
+
+    }
 }

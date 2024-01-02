@@ -14,9 +14,9 @@ public class ControllerExceptionHandler implements InvocationHandler {
         Object result;
         try{
 
-            System.out.println("Before method call " + method.getName());
+//            System.out.println("Before method call " + method.getName());
             result = method.invoke(target, args);
-            System.out.println("After method call " + method.getName());
+//            System.out.println("After method call " + method.getName());
 
         } catch (Exception e){
             e.printStackTrace();
