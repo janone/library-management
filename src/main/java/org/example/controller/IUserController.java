@@ -9,5 +9,5 @@ public interface IUserController extends IController {
     Result<User> getUserByAccount(String account);
 
 
-
+    Result<Boolean>  upgrade(String account);
 }

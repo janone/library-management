@@ -31,7 +31,7 @@ public class User {
         this.account = account;
     }
 
-    public Boolean isAdmin() {
+    public Boolean getIsAdmin() {
         return isAdmin;
     }
 

@@ -1,14 +1,10 @@
 package org.example.view;
 
-import org.example.Main;
-import org.example.common.Constants;
 import org.example.common.ControllerFactory;
 import org.example.common.Result;
 import org.example.controller.IBookController;
 import org.example.entity.BookItem;
 import org.example.entity.User;
-
-import java.util.Scanner;
 
 public class AddBookView implements View{
 
@@ -16,10 +12,8 @@ public class AddBookView implements View{
     private IBookController bookController = ControllerFactory.getBean(IBookController.class);
     public void show(User user){
 
-        Scanner scanner = getScanner();
 
-
-        if(!user.isAdmin()){
+        if(!user.getIsAdmin()){
             System.out.println("only admin can add books. please ask for admin permission first");
         }
 
@@ -41,7 +35,7 @@ public class AddBookView implements View{
             BookItem bookItem = new BookItem(bookName, bookAuthor, Integer.valueOf(inventory));
             Result<BookItem> bookItemResult = bookController.addBook(bookItem);
 
-            if(bookItemResult.getCode().equals(Constants.SUCCESS_CODE)){
+            if(bookItemResult.isSuccess()){
                 System.out.println("add book success");
             }else{
                 System.out.println(bookItemResult.getMsg()+", please try again");

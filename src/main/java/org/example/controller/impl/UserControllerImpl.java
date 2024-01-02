@@ -30,5 +30,26 @@ public class UserControllerImpl implements IUserController {
         return Result.successWithData(byId);
     }
 
+    @Override
+    public Result<Boolean> upgrade(String account) {
+
+        if(account == null || account.trim().equals("")){
+            return Result.fail("user account can not be empty");
+        }
+
+        if(userService.getById(account) == null){
+            return Result.fail("user not exist");
+        }
+
+        User byId = userService.getById(account);
+        if(byId.getIsAdmin()){
+            throw new RuntimeException("user is already admin");
+        }
+
+        byId.setIsAdmin(true);
+        userService.update(byId);
+        return Result.success();
+    }
+
 
 }
