@@ -22,7 +22,12 @@ public class UpgradeAccountView implements View{
                 if(userByAccount.getData().getIsAdmin()){
                     System.out.println("user is already admin.");
                 }else{
-                    userController.upgrade(account);
+                    Result<Boolean> upgrade = userController.upgrade(account);
+                    if(upgrade.isSuccess()){
+                        System.out.println("upgrade success");
+                    } else {
+                        System.out.println(upgrade.getMsg());
+                    }
                 }
             }
         }

@@ -34,6 +34,11 @@ public class Main {
         user.setIsAdmin(true);
         userController.register(user);
 
+        User user2 = new User();
+        user2.setAccount("user1");
+        user2.setPassword("user11");
+        userController.register(user2);
+
         IBookController bookController = ControllerFactory.getBean(BookControllerImpl.class);
         for (int i = 0; i < 5; i++) {
             BookItem bookItem = new BookItem();
