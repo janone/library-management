@@ -9,9 +9,9 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class BaseService<D extends BaseDao,E> {
+public abstract class BaseService<D extends BaseDao,E> {
 
-    private D d;
+    protected D d;
 
     public BaseService(){
         Type type = this.getClass().getGenericSuperclass();
@@ -27,19 +27,18 @@ public class BaseService<D extends BaseDao,E> {
             try {
                 d = (D)genericArg1.getDeclaredConstructor().newInstance();
 
-            } catch (InstantiationException e) {
-                throw new RuntimeException(e);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            } catch (InvocationTargetException e) {
-                throw new RuntimeException(e);
-            } catch (NoSuchMethodException e) {
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                     NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
 
         } else {
             System.out.println("该类没有定义泛型参数");
         }
+    }
+
+    public BaseDao getDao(){
+        return d;
     }
 
     public E insert(E e){

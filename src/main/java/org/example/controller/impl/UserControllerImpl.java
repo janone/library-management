@@ -52,4 +52,13 @@ public class UserControllerImpl implements IUserController {
     }
 
 
+    @Override
+    public Object getServiceBean() {
+        return this.userService;
+    }
+
+    @Override
+    public Object getDaoBean() {
+        return this.userService.getDao();
+    }
 }

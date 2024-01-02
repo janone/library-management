@@ -50,6 +50,8 @@ public class MainView implements View{
                     case "O":
                         loginUser = new UserLoginRegisterView().show();
                         break;
+                    default:
+                        System.out.println("unexpected operation. please try again");
                 }
 
             } catch (ReturnException e){

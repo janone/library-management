@@ -42,7 +42,6 @@ public class BookItem {
         this.author = author;
         this.inventory = inventory;
         this.unionKey = generateUnionKey(this.author, this.name);
-
     }
 
     public BookItem() {
@@ -112,72 +111,7 @@ public class BookItem {
         );
     }
 
-    public synchronized boolean borrow(String userAccount, int amount) {
 
-        if(amount > this.inventory){
-            throw new IllegalArgumentException("The book inventory is not enough! current inventory is " + this.inventory + ", but you want " + amount);
-        }
 
-        BorrowRecord borrowRecord = borrowRecords.get(userAccount);
-        if (borrowRecord == null) {
-            borrowRecord = new BorrowRecord(userAccount, this.getUnionKey(), amount);
-            borrowRecords.put(userAccount, borrowRecord);
-        } else {
-            borrowRecord.setAmount(borrowRecord.getAmount() + amount);
-        }
-        this.inventory -= amount;
 
-        return true;
-    }
-
-    /**
-     * this is the borrow record
-     */
-    public static class BorrowRecord {
-
-        /**
-         * user account
-         */
-        private String userAccount;
-
-        /**
-         * bookUnionKey
-         */
-        private String bookUnionKey;
-
-        /**
-         * how many book does this user borrow
-         */
-        private int amount;
-
-        public BorrowRecord(String userAccount, String bookUnionKey, int amount) {
-            this.userAccount = userAccount;
-            this.bookUnionKey = bookUnionKey;
-            this.amount = amount;
-        }
-
-        public String getUserAccount() {
-            return userAccount;
-        }
-
-        public void setUserAccount(String userAccount) {
-            this.userAccount = userAccount;
-        }
-
-        public String getBookUnionKey() {
-            return bookUnionKey;
-        }
-
-        public void setBookUnionKey(String bookUnionKey) {
-            this.bookUnionKey = bookUnionKey;
-        }
-
-        public int getAmount() {
-            return amount;
-        }
-
-        public void setAmount(int amount) {
-            this.amount = amount;
-        }
-    }
 }

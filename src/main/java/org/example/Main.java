@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.common.ControllerFactory;
 import org.example.controller.impl.BookControllerImpl;
+import org.example.controller.impl.BorrowRecordControllerImpl;
 import org.example.controller.impl.UserControllerImpl;
 import org.example.view.MainView;
 
@@ -23,7 +24,8 @@ public class Main {
 
         ControllerFactory.getInstance().registerToBeanFactory(
                 new UserControllerImpl(),
-                new BookControllerImpl()
+                new BookControllerImpl(),
+                new BorrowRecordControllerImpl()
         );
 
 

@@ -7,6 +7,7 @@ import java.util.*;
 
 public class BookItemService extends BaseService<BookItemDao, BookItem>{
 
+
     public Boolean addBook(BookItem bookItem){
 
         bookItem.setUnionKey(BookItem.generateUnionKey(bookItem.getAuthor(),bookItem.getName()));
