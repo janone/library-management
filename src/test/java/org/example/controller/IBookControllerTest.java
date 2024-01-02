@@ -18,9 +18,9 @@ class IBookControllerTest {
     @BeforeEach
     void setUp() {
 
-        ControllerFactory.getInstance().registerToBeanFactory(
-                new BookControllerImpl()
-        );
+//        ControllerFactory.getInstance().registerToBeanFactory(
+//                new BookControllerImpl()
+//        );
 
         bookController = ControllerFactory.getBean(IBookController.class);
 

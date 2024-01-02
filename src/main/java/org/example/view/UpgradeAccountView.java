@@ -3,11 +3,12 @@ package org.example.view;
 import org.example.common.ControllerFactory;
 import org.example.common.Result;
 import org.example.controller.IUserController;
+import org.example.controller.impl.UserControllerImpl;
 import org.example.entity.User;
 
 public class UpgradeAccountView implements View{
 
-    private IUserController userController = ControllerFactory.getBean(IUserController.class);
+    private IUserController userController = ControllerFactory.getBean(UserControllerImpl.class);
     public void show(User user) {
 
 

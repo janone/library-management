@@ -12,12 +12,6 @@ class UserLoginRegisterViewTest {
 
     @BeforeEach
     void setUp(){
-        ControllerFactory.getInstance().registerToBeanFactory(
-                new UserControllerImpl()
-        );
-
-
-//        new MainView().show();
     }
 
     @Test

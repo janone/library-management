@@ -1,11 +1,16 @@
 package org.example.controller.impl;
 
+import org.example.annotation.AutoWiredField;
+import org.example.common.Result;
 import org.example.controller.IBorrowRecordController;
+import org.example.entity.BorrowRecord;
 import org.example.service.BorrowRecordService;
 
-public class BorrowRecordControllerImpl implements IBorrowRecordController {
+import java.util.List;
 
-    private BorrowRecordService borrowRecordService = new BorrowRecordService();
+public class BorrowRecordControllerImpl implements IBorrowRecordController {
+    @AutoWiredField
+    private BorrowRecordService borrowRecordService;
     @Override
     public Object getServiceBean() {
         return this.borrowRecordService;
@@ -14,5 +19,12 @@ public class BorrowRecordControllerImpl implements IBorrowRecordController {
     @Override
     public Object getDaoBean() {
         return this.borrowRecordService.getDao();
+    }
+
+    @Override
+    public Result<List<BorrowRecord>> getByUserAccount(String userAccount) {
+        BorrowRecord borrowRecord = new BorrowRecord();
+        borrowRecord.setUserAccount(userAccount);
+        return Result.successWithData(borrowRecordService.list(borrowRecord));
     }
 }

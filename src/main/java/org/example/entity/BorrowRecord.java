@@ -23,7 +23,7 @@ public class BorrowRecord {
     /**
      * how many book does this user borrow
      */
-    private int amount;
+    private Integer amount;
 
     public BorrowRecord(String userAccount, String bookUnionKey, Integer amount) {
         this.userAccount = userAccount;
@@ -50,11 +50,11 @@ public class BorrowRecord {
         this.bookUnionKey = bookUnionKey;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -62,4 +62,11 @@ public class BorrowRecord {
         return "[" + userAccount + "]-" + bookUnionKey;
     }
 
+    public String getUnionKey() {
+        return unionKey;
+    }
+
+    public void setUnionKey(String unionKey) {
+        this.unionKey = unionKey;
+    }
 }

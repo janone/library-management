@@ -1,6 +1,7 @@
 package org.example.controller.impl;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.example.annotation.AutoWiredField;
 import org.example.common.Result;
 import org.example.controller.ILibraryController;
 import org.example.entity.BookItem;
@@ -8,8 +9,8 @@ import org.example.entity.BorrowRecord;
 import org.example.manager.LibraryManager;
 
 public class LibraryControllerImpl implements ILibraryController {
-
-    private LibraryManager libraryManager = new LibraryManager();
+    @AutoWiredField
+    private LibraryManager libraryManager;
     @Override
     public Object getServiceBean() {
         return libraryManager;

@@ -1,5 +1,6 @@
 package org.example.manager;
 
+import org.example.annotation.AutoWiredField;
 import org.example.common.BusinessException;
 import org.example.common.ControllerFactory;
 import org.example.common.Result;
@@ -12,8 +13,10 @@ import org.example.service.BorrowRecordService;
 
 public class LibraryManager {
 
-    private BookItemService bookItemService = (BookItemService) ControllerFactory.getBean(IBookController.class).getServiceBean();
-    private BorrowRecordService borrowRecordService = (BorrowRecordService) ControllerFactory.getBean(IBorrowRecordController.class).getServiceBean();
+    @AutoWiredField
+    private BookItemService bookItemService;
+    @AutoWiredField
+    private BorrowRecordService borrowRecordService;
 
 
     public Boolean borrowBook(String userAccount, String bookName, String author, Integer amount) {
@@ -63,7 +66,7 @@ public class LibraryManager {
             borrowRecordService.update(borrowRecord);
         }
 
-        book.setInventory(book.getInventory() + amount);
+        book.setInventory(book.getInventory() - amount);
         bookItemService.update(book);
 
         return true;

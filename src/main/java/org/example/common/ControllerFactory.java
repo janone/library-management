@@ -1,7 +1,9 @@
 package org.example.common;
 
+import org.example.annotation.AutoWiredField;
 import org.example.controller.IController;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.*;
@@ -21,12 +23,60 @@ public class ControllerFactory {
 
 
     private Map<Class<?>, Object> proxyContainer = new HashMap<>();
+    private Map<Class<?>, Object> rowTypeContainer = new HashMap<>();
     private List<Object> sourceTypeRegister = new ArrayList<>();
 
-    public static <T> T getBean(Class<T> clazz){
+    public static <T> T getBean(Class<T> clazz) {
         Object bean = factory.getProxyContainer().get(clazz);
+        try{
+            if(bean == null){
+                synchronized (clazz) {
+
+                    if(factory.getProxyContainer().containsKey(clazz)) {
+                        return (T) factory.getProxyContainer().get(clazz);
+                    }
+
+                    if(factory.rowTypeContainer.containsKey(clazz)){
+                        return (T)factory.rowTypeContainer.get(clazz);
+                    }
+
+                    bean = clazz.getDeclaredConstructor().newInstance();
+                    factory.rowTypeContainer.put(clazz,bean);
+                    populateBean(bean);
+                    factory.rowTypeContainer.remove(clazz,bean);
+                    if(bean instanceof IController){
+
+                        Class<?>[] interfaces = clazz.getInterfaces();
+                        for (Class<?> anInterface : interfaces) {
+                            InvocationHandler handler = new ControllerExceptionHandler(bean);
+                            Object proxy = Proxy.newProxyInstance(anInterface.getClassLoader(), bean.getClass().getInterfaces(), handler);
+                            factory.getProxyContainer().put(anInterface, proxy);
+                        }
+                    } else {
+                        factory.getProxyContainer().put(clazz,bean);
+                    }
+                }
+
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         return (T)bean;
     }
+
+    private static void populateBean(Object bean) throws IllegalAccessException {
+        Class<?> aClass = bean.getClass();
+        Field[] declaredFields = aClass.getDeclaredFields();
+        for (Field field : declaredFields) {
+            field.setAccessible(true);
+            AutoWiredField annotation = field.getAnnotation(AutoWiredField.class);
+            if(annotation != null){
+                field.set(bean, getBean(field.getType()));
+            }
+        }
+    }
+
 
     public Map<Class<?>, Object> getProxyContainer() {
         return proxyContainer;
@@ -44,37 +94,33 @@ public class ControllerFactory {
         this.sourceTypeRegister = sourceTypeRegister;
     }
 
-    private void register(IController o){
-        sourceTypeRegister.add(o);
-    }
+//    private void register(Object o){
+//        sourceTypeRegister.add(o);
+//    }
 
-    public void registerToBeanFactory(IController... array){
-        Arrays.stream(array).forEach(o->{
-            register(o);
-        });
-        init();
-    }
+//    public void registerToBeanFactory(Object ... array){
+//        Arrays.stream(array).forEach(this::register);
+//        init();
+//    }
 
 
 
-        public void init() {
+//        public void init() {
 
-        for (Object o : sourceTypeRegister) {
-            if(o instanceof IController){
-
-                Class<?>[] interfaces = o.getClass().getInterfaces();
-                for (int i = 0; i < interfaces.length; i++) {
-                    Class<?> anInterface = interfaces[i];
-                    InvocationHandler handler = new ControllerExceptionHandler(o);
-                    Object proxy = Proxy.newProxyInstance(anInterface.getClassLoader(), o.getClass().getInterfaces(), handler);
-                    proxyContainer.put(anInterface,proxy);
-
-                }
-            }
-        }
+//        for (Object o : sourceTypeRegister) {
+//            if(o instanceof IController){
+//
+//                Class<?>[] interfaces = o.getClass().getInterfaces();
+//                for (Class<?> anInterface : interfaces) {
+//                    InvocationHandler handler = new ControllerExceptionHandler(o);
+//                    Object proxy = Proxy.newProxyInstance(anInterface.getClassLoader(), o.getClass().getInterfaces(), handler);
+//                    proxyContainer.put(anInterface, proxy);
+//                }
+//            }
+//        }
 
 
-    }
+//    }
 
 
 

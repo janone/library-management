@@ -12,12 +12,10 @@ class IControllerFactoryTest {
     ControllerFactory factory;
     @BeforeEach
     void setUp() throws Exception {
-        factory = ControllerFactory.getInstance();
-        factory.registerToBeanFactory(new UserControllerImpl());
     }
     @Test
     void getBean() {
-        IUserController bean = factory.getBean(IUserController.class);
+        IUserController bean = ControllerFactory.getBean(IUserController.class);
         User user = new User();
         user.setAccount("Jack");
         user.setPassword("1234345");

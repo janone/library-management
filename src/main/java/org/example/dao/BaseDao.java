@@ -106,7 +106,7 @@ public class BaseDao<T> {
 
                         for (T dbObj : values) {
                             String dbFiledValue = (String) field.get(dbObj);
-                            if (!dbFiledValue.toLowerCase().contains(param)) {
+                            if (!dbFiledValue.toLowerCase().contains(param.toLowerCase())) {
                                 result.remove(dbObj);
                             }
                         }

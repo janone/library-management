@@ -1,13 +1,14 @@
 package org.example.controller.impl;
 
+import org.example.annotation.AutoWiredField;
 import org.example.common.Result;
 import org.example.controller.IUserController;
 import org.example.entity.User;
 import org.example.service.UserService;
 
 public class UserControllerImpl implements IUserController {
-
-    private UserService userService = new UserService();
+    @AutoWiredField
+    private UserService userService;
 
     public Result<Boolean> register(User user){
         if(user.getAccount() == null || user.getAccount().trim().equals("")){

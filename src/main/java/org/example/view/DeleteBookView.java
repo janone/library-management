@@ -3,11 +3,12 @@ package org.example.view;
 import org.example.common.ControllerFactory;
 import org.example.common.Result;
 import org.example.controller.IBookController;
+import org.example.controller.impl.BookControllerImpl;
 import org.example.entity.User;
 
 public class DeleteBookView implements View{
 
-    private IBookController bookController = ControllerFactory.getBean(IBookController.class);
+    private IBookController bookController = ControllerFactory.getBean(BookControllerImpl.class);
 
     public void show(User user) {
 

@@ -22,11 +22,11 @@ public class Main {
     }
     public static void main(String[] args) {
 
-        ControllerFactory.getInstance().registerToBeanFactory(
-                new UserControllerImpl(),
-                new BookControllerImpl(),
-                new BorrowRecordControllerImpl()
-        );
+//        ControllerFactory.getInstance().registerToBeanFactory(
+//                new UserControllerImpl(),
+//                new BookControllerImpl(),
+//                new BorrowRecordControllerImpl()
+//        );
 
 
         new MainView().show();

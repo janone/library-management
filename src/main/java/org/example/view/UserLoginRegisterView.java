@@ -5,6 +5,7 @@ import org.example.common.Constants;
 import org.example.common.ControllerFactory;
 import org.example.common.Result;
 import org.example.controller.IUserController;
+import org.example.controller.impl.UserControllerImpl;
 import org.example.entity.User;
 
 import java.util.Scanner;
@@ -12,7 +13,7 @@ import java.util.Scanner;
 public class UserLoginRegisterView {
 
 
-    private IUserController userController = ControllerFactory.getBean(IUserController.class);
+    private IUserController userController = ControllerFactory.getBean(UserControllerImpl.class);
     public User show(){
         Scanner scanner = Main.getScanner();
         System.out.println("====================================");

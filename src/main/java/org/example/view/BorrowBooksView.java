@@ -4,11 +4,12 @@ import org.example.common.ControllerFactory;
 import org.example.common.Result;
 import org.example.controller.IBookController;
 import org.example.controller.ILibraryController;
+import org.example.controller.impl.LibraryControllerImpl;
 import org.example.entity.User;
 
 public class BorrowBooksView implements View{
 
-    private ILibraryController libraryController = ControllerFactory.getBean(ILibraryController.class);
+    private ILibraryController libraryController = ControllerFactory.getBean(LibraryControllerImpl.class);
 
     public void show(User user) {
 

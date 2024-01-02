@@ -1,5 +1,6 @@
 package org.example.controller.impl;
 
+import org.example.annotation.AutoWiredField;
 import org.example.common.ControllerFactory;
 import org.example.common.Result;
 import org.example.controller.IBookController;
@@ -17,8 +18,10 @@ import java.util.List;
 
 public class BookControllerImpl implements IBookController {
 
-    private BookItemService bookItemService = new BookItemService();
-    private BorrowRecordService borrowRecordService = (BorrowRecordService) ControllerFactory.getBean(IBorrowRecordController.class).getServiceBean();
+    @AutoWiredField
+    private BookItemService bookItemService;
+    @AutoWiredField
+    private BorrowRecordService borrowRecordService;
 
     public Result<BookItem> addBook(BookItem bookItem){
         if(bookItem == null){
