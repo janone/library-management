@@ -32,6 +32,11 @@ public class BookItemService extends BaseService<BookItemDao, BookItem>{
     }
 
     public Collection<BookItem> listByKeyWord(String keyword) {
+
+        if(keyword == null || keyword.equals("")){
+            return this.list();
+        }
+
         BookItem param1 = new BookItem();
         param1.setName(keyword);
         BookItem param2 = new BookItem();

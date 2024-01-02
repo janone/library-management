@@ -17,19 +17,8 @@ public class MainView implements View{
         }
 
         while(true){
+            showMenu();
             System.out.println("please choose an operation");
-            if(loginUser.getIsAdmin()){
-                System.out.println("A: add books");
-                System.out.println("D: delete books");
-                System.out.println("G: upgrade an account to admin");
-            }
-            System.out.println("L: list all books");
-            System.out.println("S: search books");
-            System.out.println("B: borrow books");
-            System.out.println("R: return books");
-            System.out.println("O: login out");
-            System.out.println("note: you can type " + scanner + " at any time to return to this page.");
-
             String operation = scanner.next();
 
             try{
@@ -44,6 +33,25 @@ public class MainView implements View{
                         new UpgradeAccountView().show(loginUser);
                     }
                 }
+
+                switch (operation){
+                    case "L":
+                        new ListBooksView().show(loginUser);
+                        break;
+                    case "S":
+                        new SearchBooksView().show(loginUser);
+                        break;
+                    case "B":
+                        new BorrowBooksView().show(loginUser);
+                        break;
+                    case "R":
+                        new ReturnBooksView().show(loginUser);
+                        break;
+                    case "O":
+                        loginUser = new UserLoginRegisterView().show();
+                        break;
+                }
+
             } catch (ReturnException e){
                 // do nothing. go to next loop
             }
@@ -54,6 +62,20 @@ public class MainView implements View{
 
 
 
+    }
+
+    private static void showMenu() {
+        if(loginUser.getIsAdmin()){
+            System.out.println("A: add books");
+            System.out.println("D: delete books");
+            System.out.println("G: upgrade an account to admin");
+        }
+        System.out.println("L: list all books");
+        System.out.println("S: search books");
+        System.out.println("B: borrow books");
+        System.out.println("R: return books");
+        System.out.println("O: login out");
+        System.out.println("note: you can type " + scanner + " at any time to return to this page.");
     }
 
 }
