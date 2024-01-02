@@ -33,12 +33,16 @@ public class MainView {
             System.out.println("B: borrow books");
             System.out.println("R: return books");
             System.out.println("O: login out");
+            System.out.println("note: you can type RT at any time to return to this page.");
 
             String operation = scanner.next();
 
             if(loginUser.isAdmin()){
                 if(operation.equals("A")){
-//                    doAddBooks();
+                    new AddBookView().show(loginUser);
+                }
+                if(operation.equals("D")){
+                    new AddBookView().show(loginUser);
                 }
             }
 

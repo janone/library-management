@@ -70,4 +70,8 @@ public class Result<T> {
     public void setData(T data) {
         this.data = data;
     }
+
+    public boolean isSuccess(){
+        return this.code == Constants.SUCCESS_CODE;
+    }
 }
