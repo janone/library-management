@@ -10,6 +10,11 @@ public class BaseDao<T> {
 
     private String getIdFieldName;
 
+    /**
+     * when initializing, to find the id field.
+     * so that the subsequent operations can be performed
+     * like to store <id, entity>, I will have to know witch is id.
+     */
     public BaseDao() {
         Type type = this.getClass().getGenericSuperclass();
 
@@ -81,7 +86,13 @@ public class BaseDao<T> {
     public T getById(Serializable id) {
         return storage.get(id);
     }
-
+    /**
+     * this method provide 'and' logic for all field criteria.
+     * if a field is a string. program will lowercase the field to compare with database.
+     * and other type will use equals method to compare.
+     * @param t
+     * @return
+     */
     public List<T> list(T t) {
         try {
 

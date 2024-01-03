@@ -3,7 +3,8 @@ package org.example.entity;
 import org.example.annotation.IDField;
 
 /**
- * this is the borrow record
+ * borrow record. record the borrow info
+ * who borrowed which book for how many
  */
 public class BorrowRecord {
 

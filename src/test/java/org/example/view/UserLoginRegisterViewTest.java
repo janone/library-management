@@ -1,13 +1,12 @@
 package org.example.view;
 
-import org.example.common.ControllerFactory;
-import org.example.controller.impl.UserControllerImpl;
 import org.example.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * in test env. the console is not available
+ */
 class UserLoginRegisterViewTest {
 
     @BeforeEach
@@ -17,7 +16,7 @@ class UserLoginRegisterViewTest {
     @Test
     void show() {
 
-        User show = new UserLoginRegisterView().show();
+        User show = (User) new UserLoginRegisterView().show(null);
         System.out.println(show);
 
     }

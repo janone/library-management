@@ -3,17 +3,20 @@ package org.example.view;
 import org.example.common.ReturnException;
 import org.example.entity.User;
 
-public class MainView implements View{
+import java.sql.SQLOutput;
+
+public class MainView extends View{
 
     private static User loginUser = null;
 
-    public void show(){
-
-        loginUser = new UserLoginRegisterView().show();// login success
+    @Override
+    public Object show(User user){
+        UserLoginRegisterView userLoginRegisterView = new UserLoginRegisterView();
+        loginUser = (User) userLoginRegisterView.show(null);// login success
 
         if(loginUser == null) {
             System.out.println("unexpected login failed. system exit");
-            return;
+            return null;
         }
 
         while(true){
@@ -22,37 +25,37 @@ public class MainView implements View{
             String operation = scanner.next();
 
             try{
-                if(loginUser.getIsAdmin()){
-                    if(operation.equals("A")){
-                        new AddBookView().show(loginUser);
-                    }
-                    if(operation.equals("D")){
-                        new DeleteBookView().show(loginUser);
-                    }
-                    if(operation.equals("G")){
-                        new UpgradeAccountView().show(loginUser);
-                    }
+
+                if(operation.equalsIgnoreCase("A")){
+                    new AddBookView().showRepetitively(loginUser);
+                }
+                else if(operation.equalsIgnoreCase("D")){
+                    new DeleteBookView().showRepetitively(loginUser);
+                }
+                else if(operation.equalsIgnoreCase("G")){
+                    new UpgradeAccountView().showRepetitively(loginUser);
+                }
+                else if(operation.equalsIgnoreCase("L")){
+                    new ListBooksView().show(loginUser);
+                }
+                else if(operation.equalsIgnoreCase("S")){
+                    new SearchBooksView().showRepetitively(loginUser);
+                }
+                else if(operation.equalsIgnoreCase("B")){
+                    new BorrowBooksView().showRepetitively(loginUser);
+                }
+                else if(operation.equalsIgnoreCase("R")){
+                    new ReturnBooksView().showRepetitively(loginUser);
+                }
+                else if(operation.equalsIgnoreCase("O")){
+                    loginUser = (User) new UserLoginRegisterView().show(null);
+                }
+                else if(operation.equalsIgnoreCase("E")){
+                    new BorrowBooksView().showRepetitively(loginUser);
+                } else {
+                    System.out.println("unexpected operation '"+ operation +"'. please try again");
                 }
 
-                switch (operation){
-                    case "L":
-                        new ListBooksView().show(loginUser);
-                        break;
-                    case "S":
-                        new SearchBooksView().show(loginUser);
-                        break;
-                    case "B":
-                        new BorrowBooksView().show(loginUser);
-                        break;
-                    case "R":
-                        new ReturnBooksView().show(loginUser);
-                        break;
-                    case "O":
-                        loginUser = new UserLoginRegisterView().show();
-                        break;
-                    default:
-                        System.out.println("unexpected operation. please try again");
-                }
 
             } catch (ReturnException e){
                 // do nothing. go to next loop
@@ -69,16 +72,18 @@ public class MainView implements View{
     private static void showMenu() {
         System.out.println(" = = = = = = = = = = = = = = = = = = =");
         if(loginUser.getIsAdmin()){
-            System.out.println("A: add books");
-            System.out.println("D: delete books");
-            System.out.println("G: upgrade an account to admin");
+            System.out.print("  (A): add books");
+            System.out.print("  (D): delete books");
+            System.out.println("  (G): upgrade an account to admin");
         }
-        System.out.println("L: list all books");
-        System.out.println("S: search books");
-        System.out.println("B: borrow books");
-        System.out.println("R: return books");
-        System.out.println("O: login out");
+        System.out.print("  (L): list all books");
+        System.out.print("  (S): search books");
+        System.out.println("  (B): borrow books");
+        System.out.print("  (R): return books");
+        System.out.print("  (O): login out");
+        System.out.println("  (E): exit system");
         System.out.println("note: you can type '" + RETURN_COMMAND + "' at any time to return to this page.");
+        System.out.println(" - - - - - - - - - - - - - - - - - - -");
     }
 
 }

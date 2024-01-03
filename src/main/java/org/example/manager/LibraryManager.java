@@ -2,15 +2,14 @@ package org.example.manager;
 
 import org.example.annotation.AutoWiredField;
 import org.example.common.BusinessException;
-import org.example.common.ControllerFactory;
-import org.example.common.Result;
-import org.example.controller.IBookController;
-import org.example.controller.IBorrowRecordController;
 import org.example.entity.BookItem;
 import org.example.entity.BorrowRecord;
 import org.example.service.BookItemService;
 import org.example.service.BorrowRecordService;
 
+/**
+ * process book borrow and return businesses
+ */
 public class LibraryManager {
 
     @AutoWiredField
@@ -18,7 +17,14 @@ public class LibraryManager {
     @AutoWiredField
     private BorrowRecordService borrowRecordService;
 
-
+    /**
+     * the borrow book business
+     * @param userAccount
+     * @param bookName
+     * @param author
+     * @param amount
+     * @return
+     */
     public Boolean borrowBook(String userAccount, String bookName, String author, Integer amount) {
 
         BookItem book = bookItemService.getById(BookItem.generateUnionKey(author, bookName));
@@ -43,6 +49,14 @@ public class LibraryManager {
     }
 
 
+    /**
+     * the return book business
+     * @param userAccount
+     * @param bookName
+     * @param author
+     * @param amount
+     * @return
+     */
     public Boolean returnBook(String userAccount, String bookName, String author, Integer amount) {
 
         BookItem book = bookItemService.getById(BookItem.generateUnionKey(author, bookName));

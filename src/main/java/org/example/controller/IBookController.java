@@ -5,17 +5,21 @@ import org.example.entity.BookItem;
 
 import java.util.Collection;
 
+/**
+ * for bookItem crud
+ */
 public interface IBookController extends IController {
 
     /**
-     * add book
+     * add book. when book exist. add the inventory only
      * @param bookItem
      * @return BookItem
      */
     Result<BookItem> addBook(BookItem bookItem);
 
     /**
-     * delBooks by author and name
+     * delBooks by book author and book name
+     * if the book is borrowed then Result in fail and tip the user
      * @param author
      * @param name
      * @return
@@ -32,6 +36,7 @@ public interface IBookController extends IController {
 
     /**
      * list by keyword
+     * it will search the book by name 'or' author
      * @param keyword
      * @return
      */

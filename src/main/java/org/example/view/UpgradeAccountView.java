@@ -1,36 +1,44 @@
 package org.example.view;
 
-import org.example.common.ControllerFactory;
+import org.example.common.BeanFactory;
 import org.example.common.Result;
+import org.example.common.ReturnException;
 import org.example.controller.IUserController;
 import org.example.controller.impl.UserControllerImpl;
 import org.example.entity.User;
 
-public class UpgradeAccountView implements View{
+public class UpgradeAccountView extends View{
 
-    private IUserController userController = ControllerFactory.getBean(UserControllerImpl.class);
-    public void show(User user) {
+    private IUserController userController = BeanFactory.getBean(UserControllerImpl.class);
 
+    @Override
+    protected void showTop(User user) {
+        if(!user.getIsAdmin()){
+            System.out.println("only admin can add books. please ask for admin permission first");
+            throw new ReturnException();
+        }
+    }
+    public Object show(User user) {
 
-        while(true){
-            System.out.println("please enter an account");
-            String account = scanner.next();
-            checkReturn(account);
+        System.out.println("-------  Upgrade Account  -------");
 
-            Result<User> userByAccount = userController.getUserByAccount(account);
-            if(userByAccount.isSuccess()){
-                if(userByAccount.getData().getIsAdmin()){
-                    System.out.println("user is already admin.");
-                }else{
-                    Result<Boolean> upgrade = userController.upgrade(account);
-                    if(upgrade.isSuccess()){
-                        System.out.println("upgrade success");
-                    } else {
-                        System.out.println(upgrade.getMsg());
-                    }
+        System.out.println("please enter an account");
+        String account = scanNextWithCheckReturn();
+
+        Result<User> userByAccount = userController.getUserByAccount(account);
+        if(userByAccount.isSuccess()){
+            if(userByAccount.getData().getIsAdmin()){
+                System.out.println("user is already admin.");
+            }else{
+                Result<Boolean> upgrade = userController.upgrade(account);
+                if(upgrade.isSuccess()){
+                    System.out.println("upgrade success");
+                } else {
+                    System.out.println(upgrade.getMsg());
                 }
             }
         }
+        return null;
 
     }
 }

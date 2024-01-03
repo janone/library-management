@@ -2,7 +2,7 @@ package org.example.view;
 
 import org.example.Main;
 import org.example.common.Constants;
-import org.example.common.ControllerFactory;
+import org.example.common.BeanFactory;
 import org.example.common.Result;
 import org.example.controller.IUserController;
 import org.example.controller.impl.UserControllerImpl;
@@ -10,11 +10,11 @@ import org.example.entity.User;
 
 import java.util.Scanner;
 
-public class UserLoginRegisterView {
+public class UserLoginRegisterView extends View{
 
 
-    private IUserController userController = ControllerFactory.getBean(IUserController.class);
-    public User show(){
+    private IUserController userController = BeanFactory.getBean(UserControllerImpl.class);
+    public Object show(User loginUser){
         Scanner scanner = Main.getScanner();
         System.out.println("====================================");
         System.out.println("Welcome to Library Management System");

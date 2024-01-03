@@ -2,17 +2,12 @@ package org.example.controller.impl;
 
 import org.example.annotation.AutoWiredField;
 import org.example.common.BusinessException;
-import org.example.common.ControllerFactory;
 import org.example.common.Result;
 import org.example.controller.IBookController;
-import org.example.controller.IBorrowRecordController;
-import org.example.controller.IUserController;
 import org.example.entity.BookItem;
 import org.example.entity.BorrowRecord;
-import org.example.entity.User;
 import org.example.service.BookItemService;
 import org.example.service.BorrowRecordService;
-import org.example.service.UserService;
 
 import java.util.Collection;
 import java.util.List;
@@ -71,7 +66,7 @@ public class BookControllerImpl implements IBookController {
         borrowRecord.setBookUnionKey(BookItem.generateUnionKey(author, name));
         List<BorrowRecord> list = borrowRecordService.list(borrowRecord);
         if(list.size() > 0){
-            throw new BusinessException("the book is borrowed by someone");
+            throw new BusinessException("the book is borrowed by someone. can not delete");
         }
 
         // delete if exist

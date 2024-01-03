@@ -8,15 +8,20 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.*;
 
-public class ControllerFactory {
+/**
+ * a bean factory.
+ * get bean method will return the object you want, but only IController will be proxy.
+ * （because jdk proxy need interface. I don't want to generate to many interfaces, so I proxy IController only for demonstration）
+ */
+public class BeanFactory {
 
-    private static ControllerFactory factory = new ControllerFactory();
+    private static BeanFactory factory = new BeanFactory();
 
-    private ControllerFactory() {
+    private BeanFactory() {
 
     }
 
-    public static ControllerFactory getInstance(){
+    public static BeanFactory getInstance(){
         return factory;
     }
 
@@ -26,10 +31,25 @@ public class ControllerFactory {
     private Map<Class<?>, Object> rowTypeContainer = new HashMap<>();
     private List<Object> sourceTypeRegister = new ArrayList<>();
 
+    /**
+     * get bean from the bean factory
+     * @param clazz
+     * @return
+     * @param <T>
+     */
     public static <T> T getBean(Class<T> clazz) {
+        if(clazz.isInterface()){
+            throw new IllegalStateException("should not pass interface");
+        }
         Object bean = factory.getProxyContainer().get(clazz);
+
         try{
             if(bean == null){
+
+                if(factory.rowTypeContainer.containsKey(clazz)){
+                    return (T)factory.rowTypeContainer.get(clazz);
+                }
+
                 synchronized (clazz) {
 
                     if(factory.getProxyContainer().containsKey(clazz)) {

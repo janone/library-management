@@ -1,8 +1,7 @@
 package org.example.controller;
 
-import org.example.common.ControllerFactory;
+import org.example.common.BeanFactory;
 import org.example.common.Result;
-import org.example.controller.impl.BookControllerImpl;
 import org.example.entity.BookItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ class IBookControllerTest {
 //                new BookControllerImpl()
 //        );
 
-        bookController = ControllerFactory.getBean(IBookController.class);
+        bookController = BeanFactory.getBean(IBookController.class);
 
         IntStream.range(0,20).forEach(i->{
             BookItem bookItem = new BookItem();

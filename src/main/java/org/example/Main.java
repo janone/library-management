@@ -1,10 +1,9 @@
 package org.example;
 
-import org.example.common.ControllerFactory;
+import org.example.common.BeanFactory;
 import org.example.controller.IBookController;
 import org.example.controller.IUserController;
 import org.example.controller.impl.BookControllerImpl;
-import org.example.controller.impl.BorrowRecordControllerImpl;
 import org.example.controller.impl.UserControllerImpl;
 import org.example.entity.BookItem;
 import org.example.entity.User;
@@ -27,7 +26,7 @@ public class Main {
     }
     public static void main(String[] args) {
 
-        IUserController userController = ControllerFactory.getBean(UserControllerImpl.class);
+        IUserController userController = BeanFactory.getBean(UserControllerImpl.class);
         User user = new User();
         user.setAccount("root");
         user.setPassword("root11");
@@ -39,7 +38,7 @@ public class Main {
         user2.setPassword("user11");
         userController.register(user2);
 
-        IBookController bookController = ControllerFactory.getBean(BookControllerImpl.class);
+        IBookController bookController = BeanFactory.getBean(BookControllerImpl.class);
         for (int i = 0; i < 5; i++) {
             BookItem bookItem = new BookItem();
             bookItem.setName("bookName"+i);
@@ -51,7 +50,7 @@ public class Main {
 
 
 
-        new MainView().show();
+        new MainView().show(null);
 
 
 

@@ -9,6 +9,11 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+/**
+ * base service that provide common methods
+ * @param <D>
+ * @param <E>
+ */
 public abstract class BaseService<D extends BaseDao,E> {
 
     protected D d;
@@ -37,10 +42,6 @@ public abstract class BaseService<D extends BaseDao,E> {
         }
     }
 
-    public BaseDao getDao(){
-        return d;
-    }
-
     public E insert(E e){
         return (E) d.insert(e);
     }
@@ -57,6 +58,13 @@ public abstract class BaseService<D extends BaseDao,E> {
         return (E) d.getById(id);
     }
 
+    /**
+     * this method provide 'and' logic for all field criteria.
+     * if a field is a string. program will lowercase the field to compare with database.
+     * and other type will use equals method to compare.
+     * @param e
+     * @return List<E>
+     */
     public List<E> list(E e){
         return d.list(e);
     }

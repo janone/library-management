@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import org.example.common.ControllerFactory;
+import org.example.common.BeanFactory;
 import org.example.common.Result;
 import org.example.controller.impl.BookControllerImpl;
 import org.example.controller.impl.BorrowRecordControllerImpl;
@@ -28,10 +28,10 @@ class ILibraryControllerTest {
     void setUp() {
 
 
-        libraryController = ControllerFactory.getBean(LibraryControllerImpl.class);
-        bookController = ControllerFactory.getBean(BookControllerImpl.class);
-        userController = ControllerFactory.getBean(UserControllerImpl.class);
-        borrowRecordController = ControllerFactory.getBean(BorrowRecordControllerImpl.class);
+        libraryController = BeanFactory.getBean(LibraryControllerImpl.class);
+        bookController = BeanFactory.getBean(BookControllerImpl.class);
+        userController = BeanFactory.getBean(UserControllerImpl.class);
+        borrowRecordController = BeanFactory.getBean(BorrowRecordControllerImpl.class);
 
         IntStream.range(0,20).forEach(i->{
             BookItem bookItem = new BookItem();
