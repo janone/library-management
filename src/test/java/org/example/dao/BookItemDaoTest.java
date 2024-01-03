@@ -70,7 +70,7 @@ class BookItemDaoTest {
 
         boolean exist = list1.stream().anyMatch(b -> b.getUnionKey().equals(bookItem1.getUnionKey()));
         if(exist){
-            throw new RuntimeException("book still exist");
+            throw new IllegalStateException("book still exist");
         }else{
             System.out.println("remove success");
         }

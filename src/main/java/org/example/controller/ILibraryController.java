@@ -10,7 +10,7 @@ public interface ILibraryController extends IController{
     /**
      * borrow a book.
      * if the book is not enough, cause the operation to fail.
-     * if
+     *
      * @param userAccount the user account.
      * @param bookName the book name.
      * @param author the book author.

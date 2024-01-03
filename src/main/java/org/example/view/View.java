@@ -5,6 +5,10 @@ import org.example.entity.User;
 
 import java.util.Scanner;
 
+/**
+ * a super view class contains the common methods
+ * use template design pattern
+ */
 public abstract class View {
 
     final Scanner scanner = new Scanner(System.in);
