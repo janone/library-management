@@ -51,7 +51,7 @@ public class MainView extends View{
                     loginUser = (User) new UserLoginRegisterView().show(null);
                 }
                 else if(operation.equalsIgnoreCase("E")){
-                    new BorrowBooksView().showRepetitively(loginUser);
+                    System.exit(0);
                 } else {
                     System.out.println("unexpected operation '"+ operation +"'. please try again");
                 }

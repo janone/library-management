@@ -1,6 +1,9 @@
 package org.example.common;
 
 import org.example.annotation.AutoWiredField;
+import org.example.common.responsibilitychain.Chain;
+import org.example.common.responsibilitychain.ChainListImpl;
+import org.example.common.responsibilitychain.LogChain;
 import org.example.controller.IController;
 
 import java.lang.reflect.Field;
@@ -16,10 +19,16 @@ import java.util.*;
 public class BeanFactory {
 
     private static BeanFactory factory = new BeanFactory();
+    private ChainListImpl chainList = new ChainListImpl();
+
+    public ChainListImpl getChainList() {
+        return chainList;
+    }
 
     private BeanFactory() {
-
     }
+
+
 
     public static BeanFactory getInstance(){
         return factory;
@@ -73,7 +82,9 @@ public class BeanFactory {
                             factory.getProxyContainer().put(anInterface, proxy);
                             factory.getProxyContainer().put(clazz, proxy);
                         }
-                    } else {
+                    } else if(bean instanceof Chain){
+                        factory.getChainList().addChain((Chain) bean);
+                    }else {
                         factory.getProxyContainer().put(clazz,bean);
                     }
                 }

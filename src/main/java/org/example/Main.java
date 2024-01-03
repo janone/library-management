@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.common.BeanFactory;
+import org.example.common.responsibilitychain.LogChain;
 import org.example.controller.IBookController;
 import org.example.controller.IUserController;
 import org.example.controller.impl.BookControllerImpl;
@@ -48,6 +49,8 @@ public class Main {
 
         }
 
+        // initial chain
+        BeanFactory.getBean(LogChain.class);
 
 
         new MainView().show(null);
