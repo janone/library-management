@@ -2,14 +2,13 @@ package org.example;
 
 import org.example.common.BeanFactory;
 import org.example.common.responsibilitychain.LogChain;
+import org.example.controller.IBookController;
 import org.example.controller.IUserController;
 import org.example.controller.impl.BookControllerImpl;
 import org.example.controller.impl.UserControllerImpl;
 import org.example.entity.BookItem;
 import org.example.entity.User;
-import org.example.view.MainView;
-
-import java.util.Scanner;
+import org.example.rpc.Server;
 
 /**
  * @Author: Zeng Jian
@@ -18,12 +17,6 @@ import java.util.Scanner;
  */
 public class Main {
 
-    private static final Scanner scanner = new Scanner(System.in);
-
-
-    public static Scanner getScanner(){
-        return scanner;
-    }
     public static void main(String[] args) {
 
         IUserController userController = BeanFactory.getBean(UserControllerImpl.class);
@@ -45,17 +38,13 @@ public class Main {
             bookItem.setAuthor("author"+i);
             bookItem.setInventory(i+1);
             bookController.addBook(bookItem);
-
         }
+
 
         // initial chain
         BeanFactory.getBean(LogChain.class);
 
-
-        new MainView().show(null);
-
-
-
+        new Server().start();
 
     }
 }
