@@ -48,7 +48,12 @@ public class BeanFactory {
      * @return
      * @param <T>
      */
-    public static <T> T getBean(Class<T> clazz) {
+    public static <T> T getBean(Class<T> clazz, Boolean isClient) {
+
+        if(isClient){
+
+        }
+
         if(clazz.isInterface()){
             throw new IllegalStateException("should not pass interface");
         }
@@ -97,6 +102,14 @@ public class BeanFactory {
         }
 
         return (T) factory.getProxyContainer().get(clazz);
+    }
+
+    public static <T> T getClient(Class<T> clazz) {
+        return getBean(clazz,true);
+    }
+
+    public static <T> T getBean(Class<T> clazz) {
+        return getBean(clazz,false);
     }
 
 
