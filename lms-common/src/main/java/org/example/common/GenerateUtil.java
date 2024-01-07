@@ -30,18 +30,12 @@ public final class GenerateUtil {
             try {
                 // 1 拼接源码
                 String sourceCode = generateSourceCode(clazz);
-                // 2 编译源码
-                compileSourceCode(sourceCode);
-
                 // sourcecode写出到文件
                 String path = writeFile(clazz, sourceCode);
-
+                // 2 编译源码
+                compileSourceCode(path);
 //                 3 类加载
-                loadGenClass(clazz);
-
-
-                // 4 实例化
-//                return (T) BeanFactory.getBean(clazz);
+                return loadGenClass(clazz);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -62,7 +56,7 @@ public final class GenerateUtil {
     }
 
 
-    private static void loadGenClass(Class<?> clazz) throws MalformedURLException {
+    private static <T> T loadGenClass(Class<T> clazz) throws MalformedURLException {
 
         // 指定类路径
         String classPath = parent;
@@ -78,12 +72,12 @@ public final class GenerateUtil {
             // 创建类的实例并调用方法
             Object instance = newClazz.getDeclaredConstructor().newInstance();
             System.out.println("load success"+instance);
+
+            return (T) instance;
             // 使用自定义类加载器加载的类的方法
             // ...
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (ReflectiveOperationException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

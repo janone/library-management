@@ -38,7 +38,7 @@ public class BeanFactory {
 
 
 
-    private Map<Class<?>, Object> proxyContainer = new HashMap<>();
+    private Map<Object, Object> proxyContainer = new HashMap<>();
     private Map<Class<?>, Object> rowTypeContainer = new HashMap<>();
     private List<Object> sourceTypeRegister = new ArrayList<>();
 
@@ -50,13 +50,9 @@ public class BeanFactory {
      */
     public static <T> T getBean(Class<T> clazz, Boolean isClient) {
 
-        if(isClient){
-
-        }
-
-        if(clazz.isInterface()){
-            throw new IllegalStateException("should not pass interface");
-        }
+//        if(clazz.isInterface()){
+//            throw new IllegalStateException("should not pass interface");
+//        }
         Object bean = factory.getProxyContainer().get(clazz);
 
         try{
@@ -88,6 +84,7 @@ public class BeanFactory {
                             Object proxy = Proxy.newProxyInstance(anInterface.getClassLoader(), bean.getClass().getInterfaces(), handler);
                             factory.getProxyContainer().put(anInterface, proxy);
                             factory.getProxyContainer().put(clazz, proxy);
+                            factory.getProxyContainer().put(anInterface.getSimpleName(), proxy);
                         }
                     } else if(bean instanceof Chain){
                         factory.getChainList().addChain((Chain) bean);
@@ -111,6 +108,15 @@ public class BeanFactory {
     public static <T> T getBean(Class<T> clazz) {
         return getBean(clazz,false);
     }
+    public static <T> T getBean(String clzString) {
+        try {
+            Class<?> aClass = Class.forName(clzString);
+            return (T) getBean(aClass,false);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
 
     private static void populateBean(Object bean) throws IllegalAccessException {
@@ -126,11 +132,11 @@ public class BeanFactory {
     }
 
 
-    public Map<Class<?>, Object> getProxyContainer() {
+    public Map<Object, Object> getProxyContainer() {
         return proxyContainer;
     }
 
-    public void setProxyContainer(Map<Class<?>, Object> proxyContainer) {
+    public void setProxyContainer(Map<Object, Object> proxyContainer) {
         this.proxyContainer = proxyContainer;
     }
 

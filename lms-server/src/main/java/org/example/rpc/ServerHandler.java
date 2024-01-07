@@ -32,14 +32,21 @@ public class ServerHandler implements Runnable {
 
                 Object bean = BeanFactory.getBean(controller);
 
-                Method declaredMethod = bean.getClass().getDeclaredMethod(method);
+                //获取params的type数组
+                Class<?>[] paramTypes = new Class[params.length];
+                for (int i = 0; i < params.length; i++) {
+                    paramTypes[i] = params[i].getClass();
+                }
 
-                Object invoke = declaredMethod.invoke(bean, params);
+                Method declaredMethod = bean.getClass().getDeclaredMethod(method,paramTypes);
 
-                session.send((Result) invoke);
+                Object invokeResult = declaredMethod.invoke(bean, params);
+
+                session.send((Result) invokeResult);
 
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                session.send(Result.fail(e.getMessage()));
+                e.printStackTrace();
             }
 
 

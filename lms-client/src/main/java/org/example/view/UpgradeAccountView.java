@@ -1,15 +1,14 @@
 package org.example.view;
 
-import org.example.common.BeanFactory;
+import org.example.rpc.ClientFactory;
 import org.example.common.Result;
 import org.example.common.ReturnException;
 import org.example.controller.IUserController;
-import org.example.controller.impl.UserControllerImpl;
 import org.example.entity.User;
 
 public class UpgradeAccountView extends View{
 
-    private IUserController userController = BeanFactory.getBean(UserControllerImpl.class);
+    private IUserController userController = ClientFactory.getController(IUserController.class);
 
     @Override
     protected void showTop(User user) {

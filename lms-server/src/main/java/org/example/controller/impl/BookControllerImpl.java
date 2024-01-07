@@ -3,6 +3,7 @@ package org.example.controller.impl;
 import org.example.annotation.AutoWiredField;
 import org.example.common.BusinessException;
 import org.example.common.Result;
+import org.example.controller.IBookController;
 import org.example.entity.BookItem;
 import org.example.entity.BorrowRecord;
 import org.example.service.BookItemService;

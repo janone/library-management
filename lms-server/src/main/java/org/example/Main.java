@@ -5,8 +5,11 @@ import org.example.common.responsibilitychain.LogChain;
 import org.example.controller.IBookController;
 import org.example.controller.IUserController;
 import org.example.controller.impl.BookControllerImpl;
+import org.example.controller.impl.BorrowRecordControllerImpl;
+import org.example.controller.impl.LibraryControllerImpl;
 import org.example.controller.impl.UserControllerImpl;
 import org.example.entity.BookItem;
+import org.example.entity.BorrowRecord;
 import org.example.entity.User;
 import org.example.rpc.Server;
 
@@ -43,6 +46,9 @@ public class Main {
 
         // initial chain
         BeanFactory.getBean(LogChain.class);
+        //pre-load
+        BeanFactory.getBean(LibraryControllerImpl.class);
+        BeanFactory.getBean(BorrowRecordControllerImpl.class);
 
         new Server().start();
 

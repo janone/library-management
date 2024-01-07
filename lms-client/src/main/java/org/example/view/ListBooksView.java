@@ -1,9 +1,8 @@
 package org.example.view;
 
-import org.example.common.BeanFactory;
+import org.example.rpc.ClientFactory;
 import org.example.common.Result;
 import org.example.controller.IBookController;
-import org.example.controller.impl.BookControllerImpl;
 import org.example.entity.BookItem;
 import org.example.entity.User;
 
@@ -12,7 +11,7 @@ import java.util.Collection;
 
 public class ListBooksView extends View{
 
-    private IBookController bookController = BeanFactory.getBean(BookControllerImpl.class);
+    private IBookController bookController = ClientFactory.getController(IBookController.class);
 
     public Object show(User user) {
 

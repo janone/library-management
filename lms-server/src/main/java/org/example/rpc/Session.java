@@ -2,8 +2,10 @@ package org.example.rpc;
 
 import org.example.common.Result;
 
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
 public class Session {
@@ -15,8 +17,13 @@ public class Session {
     public Session(Socket socket) {
         this.socket = socket;
         try {
-            this.ios = new ObjectInputStream(socket.getInputStream());
-            this.oos = new ObjectOutputStream(socket.getOutputStream());
+
+            InputStream is = socket.getInputStream();
+            this.ios = new ObjectInputStream(is);
+
+            OutputStream os = socket.getOutputStream();
+            this.oos = new ObjectOutputStream(os);
+
         } catch (Exception e){
             throw new RuntimeException(e);
         }
@@ -24,6 +31,7 @@ public class Session {
 
     public void send(Result result) {
         try {
+            System.out.println("server send: "+result);
             oos.writeObject(result);
             oos.flush();
         } catch (Exception e) {
@@ -34,7 +42,9 @@ public class Session {
     // receive method
     public Request receive() {
         try {
-            return (Request) ios.readObject();
+            Request request = (Request) ios.readObject();
+            System.out.println("server receive: "+request);
+            return request;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -1,17 +1,16 @@
 package org.example.view;
 
-import org.example.common.BeanFactory;
+import org.example.rpc.ClientFactory;
 import org.example.common.Result;
 import org.example.common.ReturnException;
 import org.example.controller.IBookController;
-import org.example.controller.impl.BookControllerImpl;
 import org.example.entity.BookItem;
 import org.example.entity.User;
 
 public class AddBookView extends View{
 
 
-    private IBookController bookController = BeanFactory.getBean(BookControllerImpl.class);
+    private IBookController bookController = ClientFactory.getController(IBookController.class);
 
     @Override
     protected void showTop(User user) {

@@ -2,10 +2,12 @@ package org.example.entity;
 
 import org.example.annotation.IDField;
 
+import java.io.Serializable;
+
 /**
  * the User entity, it has two type of user ADMIN and USER;
  */
-public class User {
+public class User implements Serializable {
 
     /**
      * username, it is unique

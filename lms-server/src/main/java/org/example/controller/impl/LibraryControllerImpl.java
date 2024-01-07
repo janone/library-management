@@ -2,6 +2,7 @@ package org.example.controller.impl;
 
 import org.example.annotation.AutoWiredField;
 import org.example.common.Result;
+import org.example.controller.ILibraryController;
 import org.example.entity.BookItem;
 import org.example.manager.LibraryManager;
 

@@ -1,14 +1,13 @@
 package org.example.view;
 
-import org.example.common.BeanFactory;
+import org.example.rpc.ClientFactory;
 import org.example.common.Result;
 import org.example.controller.ILibraryController;
-import org.example.controller.impl.LibraryControllerImpl;
 import org.example.entity.User;
 
 public class ReturnBooksView extends View{
 
-    private ILibraryController libraryController = BeanFactory.getBean(LibraryControllerImpl.class);
+    private ILibraryController libraryController = ClientFactory.getController(ILibraryController.class);
 
     public Object show(User user) {
         System.out.println("-------  Return Books  -------");

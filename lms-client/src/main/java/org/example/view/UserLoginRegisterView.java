@@ -1,21 +1,17 @@
 package org.example.view;
 
-import org.example.Main;
-import org.example.common.BeanFactory;
+import org.example.rpc.ClientFactory;
 import org.example.common.Constants;
 import org.example.common.Result;
 import org.example.controller.IUserController;
-import org.example.controller.impl.UserControllerImpl;
 import org.example.entity.User;
 
-import java.util.Scanner;
 
 public class UserLoginRegisterView extends View{
 
 
-    private IUserController userController = BeanFactory.getBean(UserControllerImpl.class);
+    private IUserController userController = ClientFactory.getController(IUserController.class);
     public Object show(User loginUser){
-        Scanner scanner = Main.getScanner();
         System.out.println("====================================");
         System.out.println("Welcome to Library Management System");
         System.out.println("====================================");

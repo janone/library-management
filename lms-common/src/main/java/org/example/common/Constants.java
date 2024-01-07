@@ -7,4 +7,10 @@ public final class Constants {
     public static final String DEFAULE_FAIL_MESSAGE = "操作失败";
     public static final String DEFAULE_SUCCESS_MESSAGE = "操作成功";
 
+    public static final String DEFAULE_HOST = "localhost";
+    public static final int DEFAULE_PORT = 2345;
+
+
+
+
 }

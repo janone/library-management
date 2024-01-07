@@ -2,11 +2,13 @@ package org.example.entity;
 
 import org.example.annotation.IDField;
 
+import java.io.Serializable;
+
 /**
  * borrow record. record the borrow info
  * who borrowed which book for how many
  */
-public class BorrowRecord {
+public class BorrowRecord implements Serializable {
 
     @IDField
     private String unionKey;

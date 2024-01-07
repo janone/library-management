@@ -3,12 +3,13 @@ package org.example.entity;
 
 import org.example.annotation.IDField;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * a bookItem is a unit for book management
  */
-public class BookItem {
+public class BookItem implements Serializable {
     /**
      * book id: the format is "["+author + "]-[" + book_name + "]"
      */
