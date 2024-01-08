@@ -46,13 +46,20 @@ public final class GenerateUtil {
         return null;
     }
 
+
+    private static String userDir;
+    private static String packageDir;
+
     private static String parent;
 
     static {
         String osName = System.getProperty("os.name");
-        parent = GenerateUtil.class.getClassLoader().getResource("").getPath()
-                + "org/example/controller";
-        if (osName.contains("Windows")) {
+        userDir = System.getProperty("user.home");
+        System.out.println("userDir:"+userDir);
+        packageDir = "org"+File.separator+"example"+File.separator+"controller";
+        parent = userDir+"/"+packageDir;
+        System.out.println(parent);
+        if (osName.contains("Windows") && (parent.startsWith("/")||parent.startsWith("\\"))) {
             parent = parent.substring(1);
         }
     }
@@ -60,19 +67,16 @@ public final class GenerateUtil {
 
     private static <T> T loadGenClass(Class<T> clazz) throws MalformedURLException {
 
-        // 指定类路径
-        String classPath = parent;
-        // 解析路径，获取文件 URL 数组
-        URL[] urls = new URL[1];
-        urls[0] = new URL("file://"+parent);
-//        System.out.println(urls[0]);
-        // 创建自定义类加载器
-        URLClassLoader classLoader = new URLClassLoader(urls);
+        String className = packageDir.replaceAll("/",".").replaceAll("\\\\",".") + "."+clazz.getSimpleName().substring(1) + "Impl";
         // 加载指定类
         try {
-            Class<?> newClazz = classLoader.loadClass("org.example.controller." + clazz.getSimpleName().substring(1) + "Impl");
             // 创建类的实例并调用方法
-            Object instance = newClazz.getDeclaredConstructor().newInstance();
+
+            MyClassLoader myClassLoader = new MyClassLoader(userDir);
+            Class<?> aClass = myClassLoader.findClass(className);
+
+
+            Object instance = aClass.getDeclaredConstructor().newInstance();
             System.out.println("load success"+instance);
 
             return (T) instance;
@@ -88,7 +92,7 @@ public final class GenerateUtil {
             String path = parent +"/"+ clazz.getSimpleName().substring(1) + "Impl.java";
             File dir = new File(parent);
             if(!dir.exists()){
-                Files.createDirectory(dir.toPath());
+                Files.createDirectories(dir.toPath());
             }
             System.out.println(path);
             java.io.File file = new java.io.File(path);
