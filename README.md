@@ -17,7 +17,7 @@ how to run?
 
 - and it is a command line interface. when you run client, it will ask you to login.
 
-- in previous version, it is also a command line interface. but it was not divided into two sides, and I tended to explain why I used controller and MVC architecture in face to face presentation.
+- in previous version, it is also a command line interface. but it was not divided into two sides, and I tended to do that and explain why I used controller and MVC architecture in face to face presentation.
 
 - it is a hurry version, it is not that perfect but enough for demonstration.
 
