@@ -29,4 +29,7 @@ public interface IUserController extends IController {
      * @return
      */
     Result<Boolean>  upgrade(String account);
+
+
+    Result<String> login(String account, String password);
 }

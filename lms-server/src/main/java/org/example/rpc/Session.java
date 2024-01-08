@@ -11,18 +11,18 @@ import java.net.Socket;
 public class Session {
     private final Socket socket;
 
-    private ObjectInputStream ios;
-    private ObjectOutputStream oos;
+//    private ObjectInputStream ios;
+//    private ObjectOutputStream oos;
 
     public Session(Socket socket) {
         this.socket = socket;
         try {
 
-            InputStream is = socket.getInputStream();
-            this.ios = new ObjectInputStream(is);
-
-            OutputStream os = socket.getOutputStream();
-            this.oos = new ObjectOutputStream(os);
+//            InputStream is = socket.getInputStream();
+//            this.ios = new ObjectInputStream(is);
+//
+//            OutputStream os = socket.getOutputStream();
+//            this.oos = new ObjectOutputStream(os);
 
         } catch (Exception e){
             throw new RuntimeException(e);
@@ -31,7 +31,12 @@ public class Session {
 
     public void send(Result result) {
         try {
-            System.out.println("server send: "+result);
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+
+            if(result == null){
+                throw new IllegalArgumentException("result is null");
+            }
+//            System.out.println("server send: "+result);
             oos.writeObject(result);
             oos.flush();
         } catch (Exception e) {
@@ -42,8 +47,13 @@ public class Session {
     // receive method
     public Request receive() {
         try {
-            Request request = (Request) ios.readObject();
-            System.out.println("server receive: "+request);
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+//            Request request = (Request) ios.readObject();
+            Request request = (Request)ois.readObject();
+            if(request == null){
+                throw new IllegalArgumentException("request is null");
+            }
+//            System.out.println("server receive: "+request);
             return request;
         } catch (Exception e) {
             throw new RuntimeException(e);

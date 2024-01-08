@@ -39,6 +39,8 @@ public final class GenerateUtil {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            throw new IllegalStateException("client can only be an interface");
         }
 
         return null;
@@ -63,7 +65,7 @@ public final class GenerateUtil {
         // 解析路径，获取文件 URL 数组
         URL[] urls = new URL[1];
         urls[0] = new URL("file://"+parent);
-        System.out.println(urls[0]);
+//        System.out.println(urls[0]);
         // 创建自定义类加载器
         URLClassLoader classLoader = new URLClassLoader(urls);
         // 加载指定类
@@ -103,7 +105,7 @@ public final class GenerateUtil {
 
     private static void compileSourceCode(String filePath) {
 
-        System.out.println("the compile file path:"+filePath);
+//        System.out.println("the compile file path:"+filePath);
 
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
@@ -112,7 +114,7 @@ public final class GenerateUtil {
 
         JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, null, null, null, objectsFromStrings);
         Boolean call = task.call();
-        System.out.println(call);
+//        System.out.println(call);
     }
 
     private static <T> String generateSourceCode(Class<T> clazz) {

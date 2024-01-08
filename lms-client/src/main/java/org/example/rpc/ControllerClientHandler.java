@@ -1,13 +1,12 @@
 package org.example.rpc;
 
-import org.example.common.BeanFactory;
-import org.example.common.BusinessException;
+
 import org.example.common.Result;
-import org.example.common.responsibilitychain.ChainListImpl;
 
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 
 public class ControllerClientHandler implements InvocationHandler {
 
@@ -18,7 +17,13 @@ public class ControllerClientHandler implements InvocationHandler {
         this.target = target;
     }
 
+    private static List<String> ignoreMethodList = Arrays.asList("toString","hashCode","equals","getClass");
+
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+
+        if (method.getReturnType()!= Result.class) {
+            return method.invoke(target,args);
+        }
 
         Class<?> anInterface = target.getClass().getInterfaces()[0];
         String fullInterfaceName = anInterface.getName();
@@ -30,8 +35,11 @@ public class ControllerClientHandler implements InvocationHandler {
         request.setParams(args);
 
         Session session = Session.getInstance();
+        request.setToken(session.getSessionId());
+
         session.send(request);
-        return session.receive();
+        Result receive = session.receive();
+        return receive;
 
 
     }

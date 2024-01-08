@@ -1,8 +1,10 @@
-package org.example.common.responsibilitychain;
+package org.example.common;
+
+import org.example.common.responsibilitychain.Chain;
 
 import java.util.Arrays;
 
-public class LogChain implements Chain{
+public class LogChain implements Chain {
 
     @Override
     public Object doFilter(Chain chain, Object ... args) throws Exception {

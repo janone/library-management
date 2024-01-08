@@ -5,6 +5,7 @@ import org.example.common.Constants;
 import org.example.common.Result;
 import org.example.controller.IUserController;
 import org.example.entity.User;
+import org.example.rpc.Session;
 
 
 public class UserLoginRegisterView extends View{
@@ -27,7 +28,7 @@ public class UserLoginRegisterView extends View{
                 continue;
             }
             User data = result.getData();
-            if(data == null){ // not exit, go register
+            if(data == null){ // not exist, go register
                 System.out.println("user " + account + " is not exist, " +
                         "please enter your password to register one, at least six characters. " +
                         "or you can enter N to try login again");
@@ -49,14 +50,16 @@ public class UserLoginRegisterView extends View{
                     System.out.println(registerResult.getMsg());
                 }
 
-            } else { // exit, go password
+            } else { // exist, go password
                 System.out.println("please enter you password to login");
                 String password = scanner.next();
-                if(password.equals(data.getPassword())){
+                Result<String> loginResult = userController.login(account, password);
+                if(loginResult.isSuccess()){
                     System.out.println("you login success !!");
+                    Session.getInstance().setSessionId(loginResult.getData()); // set token
                     return data;
                 } else {
-                    System.out.println("password is not correct");
+                    System.out.println(loginResult.getMsg());
                 }
             }
         }

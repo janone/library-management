@@ -10,6 +10,9 @@ import java.util.Map;
  * a bookItem is a unit for book management
  */
 public class BookItem implements Serializable {
+
+
+
     /**
      * book id: the format is "["+author + "]-[" + book_name + "]"
      */

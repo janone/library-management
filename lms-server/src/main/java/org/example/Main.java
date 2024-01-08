@@ -1,7 +1,7 @@
 package org.example;
 
 import org.example.common.BeanFactory;
-import org.example.common.responsibilitychain.LogChain;
+import org.example.common.LogChain;
 import org.example.controller.IBookController;
 import org.example.controller.IUserController;
 import org.example.controller.impl.BookControllerImpl;
@@ -9,7 +9,6 @@ import org.example.controller.impl.BorrowRecordControllerImpl;
 import org.example.controller.impl.LibraryControllerImpl;
 import org.example.controller.impl.UserControllerImpl;
 import org.example.entity.BookItem;
-import org.example.entity.BorrowRecord;
 import org.example.entity.User;
 import org.example.rpc.Server;
 

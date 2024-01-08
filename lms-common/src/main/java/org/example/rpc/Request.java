@@ -6,7 +6,7 @@ public class Request implements Serializable {
 
     private String method;
     private Object[] params;
-    private String id;
+    private String token;
     private String controller;
 
 
@@ -26,12 +26,12 @@ public class Request implements Serializable {
         this.params = params;
     }
 
-    public String getId() {
-        return id;
+    public String getToken() {
+        return token;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getController() {

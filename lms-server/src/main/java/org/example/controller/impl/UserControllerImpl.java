@@ -58,4 +58,10 @@ public class UserControllerImpl implements IUserController {
     }
 
 
+    public Result<String> login(String account, String password){
+        String token = userService.login(account, password);
+        return Result.successWithData(token);
+    }
+
+
 }
