@@ -57,20 +57,23 @@ public class BookControllerImpl implements IBookController {
 
         // check if data exist
         String unionKey = BookItem.generateUnionKey(author, name);
-        BookItem byId = bookItemService.getById(unionKey);
-        if(byId == null){
-            throw new BusinessException("the book does not exist");
-        }
 
-        BorrowRecord borrowRecord = new BorrowRecord();
-        borrowRecord.setBookUnionKey(BookItem.generateUnionKey(author, name));
-        List<BorrowRecord> list = borrowRecordService.list(borrowRecord);
-        if(list.size() > 0){
-            throw new BusinessException("the book is borrowed by someone. can not delete");
-        }
 
         // delete if exist
-        bookItemService.delete(unionKey);
+        synchronized (unionKey.intern()){
+            BookItem byId = bookItemService.getById(unionKey);
+            if(byId == null){
+                throw new BusinessException("the book does not exist");
+            }
+
+            BorrowRecord borrowRecord = new BorrowRecord();
+            borrowRecord.setBookUnionKey(BookItem.generateUnionKey(author, name));
+            List<BorrowRecord> list = borrowRecordService.list(borrowRecord);
+            if(list.size() > 0){
+                throw new BusinessException("the book is borrowed by someone. can not delete");
+            }
+            bookItemService.delete(unionKey);
+        }
 
         return Result.success();
 

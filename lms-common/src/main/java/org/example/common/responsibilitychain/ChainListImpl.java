@@ -25,8 +25,7 @@ public class ChainListImpl implements Chain{
     	//遍历完结束返回
         if(num == chainList.size()) return null;
         // 遍历chainList里的Chain。
-        chainList.get(num++).doFilter(this,args);
-        return null;
+        return chainList.get(num++).doFilter(this,args);
     }
 
     public void addChain(Chain chain){

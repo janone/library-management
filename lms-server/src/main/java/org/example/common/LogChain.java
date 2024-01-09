@@ -10,8 +10,8 @@ public class LogChain implements Chain {
     public Object doFilter(Chain chain, Object ... args) throws Exception {
 //        System.out.println("log chain");
         System.out.println(" ->  controller invoke param log "+Arrays.toString(args));
-        chain.doFilter(chain,args);
+        Object result =  chain.doFilter(chain,args);
 //        System.out.println("after");
-        return null;
+        return result;
     }
 }
