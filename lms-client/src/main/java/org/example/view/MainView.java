@@ -78,7 +78,7 @@ public class MainView extends View{
         System.out.print("  (S): search books");
         System.out.println("  (B): borrow books");
         System.out.print("  (R): return books");
-        System.out.print("  (O): login out");
+        System.out.print("  (O): logout");
         System.out.println("  (E): exit system");
         System.out.println("note: you can type '" + RETURN_COMMAND + "' at any time to return to this page.");
         System.out.println(" - - - - - - - - - - - - - - - - - - -");
